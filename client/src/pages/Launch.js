@@ -1,8 +1,12 @@
-import { useMemo } from 'react';
-import { Appear, Button, Loading, Paragraph } from 'arwes';
-import Clickable from '../components/Clickable';
+import { useMemo } from "react";
+import { Appear, Button, Loading, Paragraph } from "arwes";
+import Clickable from "../components/Clickable";
+
+import { useScreenSize } from "../hooks/useScreenSize";
 
 const Launch = (props) => {
+  const screenSize = useScreenSize();
+
   const selectorBody = useMemo(() => {
     return props.planets?.map((planet) => (
       <option value={planet.keplerName} key={planet.keplerName}>
@@ -11,7 +15,7 @@ const Launch = (props) => {
     ));
   }, [props.planets]);
 
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split("T")[0];
 
   return (
     <Appear id="launch" animate show={props.entered}>
@@ -34,12 +38,14 @@ const Launch = (props) => {
       <form
         onSubmit={props.submitLaunch}
         style={{
-          display: 'inline-grid',
-          gridTemplateColumns: 'auto auto',
-          gridGap: '10px 20px',
+          display: "inline-grid",
+          gridTemplateColumns: "auto auto",
+          gridGap: "10px 20px",
         }}
       >
-        <label htmlFor="launch-day">Launch Date</label>
+        <label htmlFor="launch-day">
+          {screenSize.width >= 470 ? "Launch Date" : "Date"}
+        </label>
         <input
           type="date"
           id="launch-day"
@@ -48,16 +54,22 @@ const Launch = (props) => {
           max="2040-12-31"
           defaultValue={today}
         />
-        <label htmlFor="mission-name">Mission Name</label>
+        <label htmlFor="mission-name">
+          {screenSize.width >= 470 ? "Mission Name" : "Mission"}
+        </label>
         <input type="text" id="mission-name" name="mission-name" />
-        <label htmlFor="rocket-name">Rocket Type</label>
+        <label htmlFor="rocket-name">
+          {screenSize.width >= 470 ? "Rocket Type" : "Rocket"}
+        </label>
         <input
           type="text"
           id="rocket-name"
           name="rocket-name"
           defaultValue="Explorer IS1"
         />
-        <label htmlFor="planets-selector">Destination Exoplanet</label>
+        <label htmlFor="planets-selector">
+          {screenSize.width >= 470 ? "Destination Exoplanet" : "Destination"}
+        </label>
         <select id="planets-selector" name="planets-selector">
           {selectorBody}
         </select>
@@ -69,7 +81,7 @@ const Launch = (props) => {
             layer="success"
             disabled={props.isPendingLaunch}
           >
-            Launch Mission ✔
+            {screenSize.width >= 470 ? "Launch Mission ✔" : "Launch"}
           </Button>
         </Clickable>
         {props.isPendingLaunch && <Loading animate small />}
