@@ -1,11 +1,18 @@
-import { useMemo } from "react";
-import { Appear, Button, Loading, Paragraph } from "arwes";
-import Clickable from "../components/Clickable";
+import { useMemo } from 'react';
+import { Appear, Button, Loading, Paragraph } from 'arwes';
+import Clickable from '../components/Clickable';
 
-import { useScreenSize } from "../hooks/useScreenSize";
+import { useScreenSize } from '../hooks/useScreenSize';
 
 const Launch = (props) => {
   const screenSize = useScreenSize();
+  const inputStyle = {
+    fontFamily: 'Titillium Web',
+    outlineColor: '#26dafd',
+    fontSize: '16px',
+    borderColor: 'transparent',
+    borderRadius: '2px',
+  };
 
   const selectorBody = useMemo(() => {
     return props.planets?.map((planet) => (
@@ -15,7 +22,7 @@ const Launch = (props) => {
     ));
   }, [props.planets]);
 
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toISOString().split('T')[0];
 
   return (
     <Appear id="launch" animate show={props.entered}>
@@ -38,15 +45,16 @@ const Launch = (props) => {
       <form
         onSubmit={props.submitLaunch}
         style={{
-          display: "inline-grid",
-          gridTemplateColumns: "auto auto",
-          gridGap: "10px 20px",
+          display: 'inline-grid',
+          gridTemplateColumns: 'auto auto',
+          gridGap: '10px 20px',
         }}
       >
         <label htmlFor="launch-day">
-          {screenSize.width >= 470 ? "Launch Date" : "Date"}
+          {screenSize.width >= 470 ? 'Launch Date' : 'Date'}
         </label>
         <input
+          style={inputStyle}
           type="date"
           id="launch-day"
           name="launch-day"
@@ -55,22 +63,32 @@ const Launch = (props) => {
           defaultValue={today}
         />
         <label htmlFor="mission-name">
-          {screenSize.width >= 470 ? "Mission Name" : "Mission"}
-        </label>
-        <input type="text" id="mission-name" name="mission-name" />
-        <label htmlFor="rocket-name">
-          {screenSize.width >= 470 ? "Rocket Type" : "Rocket"}
+          {screenSize.width >= 470 ? 'Mission Name' : 'Mission'}
         </label>
         <input
+          style={inputStyle}
+          type="text"
+          id="mission-name"
+          name="mission-name"
+        />
+        <label htmlFor="rocket-name">
+          {screenSize.width >= 470 ? 'Rocket Type' : 'Rocket'}
+        </label>
+        <input
+          style={inputStyle}
           type="text"
           id="rocket-name"
           name="rocket-name"
           defaultValue="Explorer IS1"
         />
         <label htmlFor="planets-selector">
-          {screenSize.width >= 470 ? "Destination Exoplanet" : "Destination"}
+          {screenSize.width >= 470 ? 'Destination Exoplanet' : 'Destination'}
         </label>
-        <select id="planets-selector" name="planets-selector">
+        <select
+          style={inputStyle}
+          id="planets-selector"
+          name="planets-selector"
+        >
           {selectorBody}
         </select>
         <Clickable>
@@ -81,7 +99,7 @@ const Launch = (props) => {
             layer="success"
             disabled={props.isPendingLaunch}
           >
-            {screenSize.width >= 470 ? "Launch Mission ✔" : "Launch"}
+            {screenSize.width >= 470 ? 'Launch Mission ✔' : 'Launch'}
           </Button>
         </Clickable>
         {props.isPendingLaunch && <Loading animate small />}
